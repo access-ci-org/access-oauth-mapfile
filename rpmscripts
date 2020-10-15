@@ -1,0 +1,26 @@
+#This is the script section extracted from the binary 1.0.2 rpm using
+#rpm -qp --scripts ../xsede-user-mapfile-1.0.2-1.noarch.rpm > rpmscripts
+#
+#we will use it to reconstruct a spec file for 1.0.2+
+#
+preinstall scriptlet (using /bin/sh):
+mkdir -p /etc/grid-security
+postinstall scriptlet (using /bin/sh):
+################################################################################
+# Set up cron script
+################################################################################
+cd /etc
+# If not there already, Add link to create_motd to cron.daily
+cd /etc/cron.hourly
+if [ ! -e mapfileupdate.sh ]
+then
+   ln -s /usr/local/share/utils/xsede_user_mapfile/mapfileupdate.sh
+fi
+
+# create the initial globus oauth map file
+/usr/local/share/utils/xsede_user_mapfile/mapfileupdate.sh
+postuninstall scriptlet (using /bin/sh):
+# remove installed files and links
+rm /etc/cron.hourly/mapfileupdate.sh
+rm -f /etc/grid-security/xsede-user-mapfile
+rm -rf /usr/local/share/utils/xsede_user_mapfile

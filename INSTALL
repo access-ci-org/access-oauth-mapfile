@@ -1,0 +1,188 @@
+
+*******************************
+** xsede-user-mapfile v1.0.2
+*******************************
+
+CONTENTS 
+    The XSEDE Globus Auth (goauth) map_file generation package.
+
+See also: https://github.com/XSEDE/oauth-ssh/blob/master/server/README.md
+    and the section there at "(Optional) Map File Account Mapping".
+
+By default, the rpm will install files under 
+/usr/local/share/utils/xsede_user_mapfile/ except as noted below.
+Once configfured with an API-KEY, the mapfile will default to 
+  /usr/local/etc/grid-security/xsede-user-mapfile .
+
+mapfileupdate.sh
+    This is the file to be run from /etc/cron.hourly 
+    to keep the map file up to date.
+    This script drives the map file generator python code 
+    "xsede-user-mapfile.py" and protects against multiple
+    invocations with a file-present flag: sbin/GENMAP_IN_PROGRESS.
+    If that file is present the script exits with
+    an informational message.  The script also does a cp (or append with cat)
+    of the map file in order to make the process more atomic and less 
+    susceptible to any scripting issues that could corrupt the operational map
+    file.
+
+/tmp/temp_xsede_mapfile
+    Default name of your working copy of the mapfile.
+
+README-xsede-user-mapfile
+INSTALL-xsede-user-mapfile
+    This file.
+
+xsede-user-mapfile-config-template.json
+    Sample .json configuration for the python map file generator.
+    The production version should be mode 600 and owned by root or a similarly
+    priv. account because the file contains a working API-KEY for populating
+    the map file.
+
+xsede-user-mapfile.py
+    Python map file generator.  It should run with default python3 and
+    the modules that ship with it:
+        import re       # regular expression support
+        import json     # json file support
+        import requests # html requests
+    If requests is not available, install it with pip or use a virtualenv as
+    shown at: https://docs.python.org/3/tutorial/venv.html .
+
+xci-196-test-plan.txt
+    The Xsede RACD test team documentation.
+
+INSTALLATION
+
+*****************************
+** YUM or RPM Installation **
+*****************************
+
+1) Configure trust in the XSEDE-Production repository
+
+   a) Browse the following directory and copy the link to the package that matches your operating system:
+      https://software.xsede.org/production/repo/repos/
+
+   b) Install the package at the link you copied above:
+      rpm -i https://software.xsede.org/production/repo/repos/XSEDE-Production-config.<OPERATING SYSTEM>.noarch.rpm
+
+   You may see a warning like this:
+      warning: XSEDE-Production-config.centos-5-1.noarch.rpm: Header V3 DSA signature: NOKEY, key ID 20423dbb
+
+   This is a signature trust bootstrapping issue because until you complete this entire procedure, RPM doesn't trust the signer of this RPM.
+
+   c) Lastly, configure RPM to trust XSEDE's signature (PGP key) installed in the previous step:
+      rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-XSEDE-Production
+
+   SECURITY NOTE:
+   If you need greater security assurance modify the above procedure as follows:
+   a') Browse the package directory using https and review the server's HTTPS/TLS host certificate
+   b') Download the package over https using your favorite secure download tool
+   c') Verify the RPM before you install it using "rpm -Kv <package>"
+
+   DEVELOPMENT REPO NOTE: If you are installing XSEDE-Development repository packages, follow this procedure:
+      https://software.xsede.org/development/repo/repoconfig.txt :
+
+		DEVELOPMENT REPO for Testing******
+		*The latest and authoritative version of these instructions are at:
+		*   https://software.xsede.org/development/repo/repoconfig.txt
+		*
+		*Please read this entire procedure and the final NOTES before performing any steps. ( a , b, c in 
+		*this instance )
+		*
+		*a) Browse the following URL and locate the appropriate package for your operating system:
+		*   http://software.xsede.org/development/repo/repos/
+		*
+		*b) Install the package located in step a, for example:
+		*   rpm -i http://software.xsede.org/development/repo/repos/XSEDE-Development-config.<YOUR_ARCH>.noarch.rpm
+		*
+		*   You should receive a warning similar to this:
+		*      warning: XSEDE-Development-config.centos-5-1.noarch.rpm: Header V3 DSA signature: NOKEY, key ID 20423dbb
+		*   This is a known trust bootstrapping issue because until you complete this entire procedure,
+		*      RPM doesn't trust the signer of this RPM.
+		*
+		*c) Configure RPM to trust XSEDE's signature (PGP key) installed by the above package:
+		*   rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-XSEDE-Development
+		*
+		******DEVELOPMENT REPO for Testing
+ 
+ 
+yum install  xsede-user-mapfile-1.0.2-1.noarch.rpm
+ 
+ OR
+
+Download the rpm from:
+https://software.xsede.org/development/globus-oauth-mapfile/xsede-user-mapfile-1.0.2-1.noarch.rpm
+
+Then install and verify it was added to your system.
+    rpm -i xsede-user-mapfile-1.0.2-1.noarch.rpm
+    rpm -ql xsede-user-mapfile
+
+# yum install OR rpm -i should emit the following if this is the 1st installation of the
+#        package and it has not been configured:
+###################
+sh-4.2# rpm -i xsede-user-mapfile-1.0.2-1.noarch.rpm 
+Traceback (most recent call last):
+  File "./xsede-user-mapfile.py", line 106, in <module>
+    main()
+  File "./xsede-user-mapfile.py", line 95, in main
+    config_file = open(MYCONFIGFILE, "r")
+IOError: [Errno 2] No such file or directory: '../etc/xsede-user-mapfile-config.json'
+cp: cannot stat ‘/tmp/temp_xsede_mapfile’: No such file or directory
+rm: cannot remove ‘/tmp/temp_xsede_mapfile’: No such file or directory
+warning: %post(xsede-user-mapfile-1.0.2-1.noarch) scriptlet failed, exit status 1
+###################
+
+    Before the python script "sbin/xsede-user-mapfile.py" will work, the admin 
+    must register it with the XDCDB.
+
+    See https://xsede-xdcdb-api.xsede.org/ .  Email response for a request for a
+    new API-KEY is usually the same work day if your request is in before lunch.
+    
+    If you do not have etc/xsede-user-mapfile-config.json then use
+    etc/xsede-user-mapfile-config-template.json as a template, and copy it, filling in the
+    appropriate values for XA- fields you registered with the XDCDB.
+    
+    Be sure to install the API-KEY into etc/xsede-user-mapfile-config.json .
+    Also set the permissions for read-only by root because it has an API-KEY in it that can
+    access the XDCDB:
+       chmod 0600 etc/xsede-user-mapfile-config.json
+
+NOTE
+    Due to history, longevity, and other factors, some sites may have multiple
+    local accounts for the same Xsede portal ID.  In these cases map file
+    entries are not automatically generated.  A note is printed to stdout and
+    it is left to local site policy and admins to decide how to handle such
+    account mappings.  In such cases, the generated mymapfile should probably
+    be appended to the real map file as demonstrated in the 
+    mapfileupdate.sh comments following the default cp of the map file.
+
+USERGUIDE
+    The map file is not a service nor is the map file generator.  If you're 
+    reading this you're an admin or service provider.
+
+    DEBUG tips: The map file generator should be runnable standalone if you
+    want to test it without the cron driver script.  In sbin/ , ./xsede-user-mapfile.py
+    should generate the file you specified in its MYMAPFILE variable.
+
+    Start any debugging there with the python script, then move to the driver
+    script if the python code is working correctly.  pdb is an excellent python
+    debugger if you're familiar with gdb for c/fortran/c++ codes.
+    
+        python -m pdb ./xsede-user-mapfile.py
+        (Pdb) continue
+        ...
+
+    Feel free to reach out to "help@xsede.org" with any issues encountered.
+
+    REAL_WORLD_TESTING: The map file generated is intended to support
+    Globus ssh as per: 
+        https://github.com/XSEDE/oauth-ssh/blob/master/server/README.md
+    See the section there under : "(Optional) Map File Account Mapping".
+
+DEPLOYMENT 
+
+    COMING SOON (sometime 2019) :
+    Globus ssh and later a version of Globus connect server will be able to
+    to consult the map file and use it to map Globus identities to 
+    corresponding local user accounts on the resource (ssh or gridftp server).
+
