@@ -3,7 +3,7 @@
 ################################################################################
 ################################################################################
 #
-Summary: Utility scripts for generating an xsede user map file
+Summary: Utility scripts for generating an XSEDE OAuth mapfile
 Name: xsede-oauth-mapfile
 Version: 1.0.4
 Release: 1
@@ -12,7 +12,7 @@ URL: http://xsede.org
 %undefine _disable_source_fetch
 Source0: https://software.xsede.org/development/xsede-oauth-mapfile/xsede-oauth-mapfile-1.0.4-1/xsede-oauth-mapfile-1.0.4-1.tgz
 Group: System
-Packager: XSEDE, Galen Arnold, Eric Blau
+Packager: XSEDE, Galen Arnold, Eric Blau, JP Navarro
 Requires: bash
 Requires: python, python3-requests
 #BuildRoot: ~/eclipse-workspace/xci-196/rpmbuild/
@@ -39,14 +39,15 @@ echo "BUILDROOT = $RPM_BUILD_ROOT"
 
 # copy files
 mkdir -p $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
-cp * $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
-
+cp -a * $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
 
 #exit
 
 %files
 %attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/*
-%attr(0600, root, root) /usr/local/share/utils/xsede_oauth_mapfile/*.json
+%attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/doc/*
+%attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/bin/*
+%attr(0600, root, root) /usr/local/share/utils/xsede_oauth_mapfile/etc/*.json
 
 %pre
 mkdir -p /etc/grid-security
@@ -58,17 +59,17 @@ mkdir -p /etc/grid-security
 cd /etc
 # If not there already, Add link to create_motd to cron.daily
 cd /etc/cron.hourly
-if [ ! -e mapfileupdate.sh ]
+if [ ! -e xsede_oauth_mapfile.sh ]
 then
-   ln -s /usr/local/share/utils/xsede_oauth_mapfile/mapfileupdate.sh
+   ln -s /usr/local/share/utils/xsede_oauth_mapfile/bin/xsede_oauth_mapfile.sh
 fi
 
 # create the initial oauth map file
-#/usr/local/share/utils/xsede_oauth_mapfile/mapfileupdate.sh
+#/usr/local/share/utils/xsede_oauth_mapfile/bin/xsede_oauth_mapfile.sh
 
 %postun
 # remove installed files and links
-rm /etc/cron.hourly/mapfileupdate.sh
+rm /etc/cron.hourly/xsede_oauth_mapfile.sh
 rm -f /etc/grid-security/xsede-oauth-mapfile
 rm -rf /usr/local/share/utils/xsede_oauth_mapfile
 

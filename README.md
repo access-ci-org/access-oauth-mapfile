@@ -1,1 +1,1 @@
-README-xsede-user-mapfile
+docs/README.md

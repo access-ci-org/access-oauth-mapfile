@@ -1,0 +1,4 @@
+V 0.0.4 20200409 Eric & JP
+  - Replace old package name references with xsede-oauth-mapfile
+  - Move docs to docs/ and add CHANGELOG
+
