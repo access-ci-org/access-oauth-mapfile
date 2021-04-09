@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# The real map_file for Globus-ssh will be placed at MAP_FILE
+# The real map_file for oauth-ssh will be placed at MAP_FILE
 MAP_FILE=/etc/grid-security/xsede-oauth-mapfile
 # The python process for generating the MAP_FILE runs from this directory:
 MAP_FILE_GEN=/usr/local/share/utils/xsede_oauth_mapfile
