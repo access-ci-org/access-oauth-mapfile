@@ -67,10 +67,15 @@ INSTALLATION
     access the XDCDB:
        chmod 0600 etc/xsede-oauth-mapfile-config.json
 
-5) Setup to run in cront
+5) Setup to run in cron
    In bin/xsede-oauth-mapfile.sh:
    - Set MAP_FILE to where you want your production mapfile
    - Set MAP_FILE_BASE to your base xsede-oauth-mapfile installation directory
+
+   cd /etc/cron.hourly
+   ln -s /usr/local/share/utils/xsede_oauth_mapfile/bin/xsede_oauth_mapfile.sh
+
+NOTES
 
 bin/xsede-oauth-mapfile.sh
     This is the file to be run from /etc/cron.hourly to keep the map file up to date.
@@ -81,6 +86,6 @@ bin/xsede-oauth-mapfile.sh
     less susceptible to any scripting issues that could corrupt the operational map file.
 
 bin/xsede-oauth-mapfile.py
-    Python map file generator.  It should run with default python3 and included modules.
+    Python map file generator. It should run with default python3 and included modules.
 
 Report problems and suggestions to help@xsede.org.
