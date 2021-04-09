@@ -18,7 +18,7 @@ from __future__ import print_function
 import json
 import re
 import requests
-MYCONFIGFILE="xsede-user-mapfile-config.json"
+MYCONFIGFILE="xsede-oauth-mapfile-config.json"
 MYMAPFILE="mymapfile"
 
 
@@ -39,10 +39,8 @@ def auth_test(xa_agent, xa_resource, xa_api_key):
     Check the auth_test and json handling via requests
     """
     print("testing authentication, should return 200...")
-    # myresult = requests.get('https://xsede-xdcdb-api.xsede.org/userinfo/auth_test',
+    myresult = requests.get('https://xsede-xdcdb-api.xsede.org/userinfo/auth_test',
 
-    myresult = requests.get(
-        'https://a3mdev.xsede.org/xdcdb-api-test/userinfo/auth_test',
         headers={'XA-AGENT':xa_agent,
                  'XA-RESOURCE':xa_resource,
                  'XA-API-KEY':xa_api_key})
@@ -57,8 +55,8 @@ def gen_mapfile(xa_agent, xa_resource, xa_api_key, output_file):
     Make the real query and generate a mapfile
     """
     print("generating {} for:".format(output_file))
-    myurl = "https://a3mdev.xsede.org/"
-    myurl += "xdcdb-api-test/userinfo/v1/resources/usernames/"
+    myurl = "https://xsede-xdcdb-api.xsede.org/"
+    myurl += "userinfo/v1/resources/usernames/"
     myurl += xa_resource
     myresult = requests.get(myurl,
                             headers={'XA-AGENT':xa_agent,

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # The real map_file for Globus-ssh will be placed at MAP_FILE
-MAP_FILE=/etc/grid-security/xsede-user-mapfile
+MAP_FILE=/etc/grid-security/xsede-oauth-mapfile
 # The python process for generating the MAP_FILE runs from this directory:
-MAP_FILE_GEN=/usr/local/share/utils/xsede_user_mapfile
+MAP_FILE_GEN=/usr/local/share/utils/xsede_oauth_mapfile
 # convenience for the XCI RACD test team :
 # MAP_FILE_GEN=./
 
@@ -24,7 +24,7 @@ fi
 
 # do the update work
 touch ./GENMAP_IN_PROGRESS
-./xsede-user-mapfile.py
+./xsede-oauth-mapfile.py
 
 # Try to keep the updates of $MAP_FILE somewhat atomic with cp 
 # leveraging linux kernel write buffering
