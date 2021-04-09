@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Generate a Globus auth compatible map_file for use with Globus SSH
+Generate an oauth compatible map_file for use with oAuth SSH
 
 See: https://github.com/XSEDE/oauth-ssh/blob/master/server/README.md 
 for a description of the map_file and discussion of how it may be used.

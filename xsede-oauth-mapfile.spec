@@ -22,7 +22,7 @@ Requires: python, python3-requests
 
 %description
 A collection of utility scripts for generating a xsede user map file 
-mapping globus oauth identities to local user accounts.
+mapping oauth identities to local user accounts.
 
 %prep
 ################################################################################
@@ -63,7 +63,7 @@ then
    ln -s /usr/local/share/utils/xsede_oauth_mapfile/mapfileupdate.sh
 fi
 
-# create the initial globus oauth map file
+# create the initial oauth map file
 #/usr/local/share/utils/xsede_oauth_mapfile/mapfileupdate.sh
 
 %postun
@@ -76,8 +76,10 @@ rm -rf /usr/local/share/utils/xsede_oauth_mapfile
 rm -rf $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
 
 %changelog
+* Fri Apr 9 2021 Eric Blau <blau@anl.gov>
+  - cleaned up naming convention to xsede-oauth-mapfile
 * Wed Jan 13 2021 Eric Blau <blau@anl.gov>
   - reconstructed revisions for 1.0.2+
 * Wed Jul 17 2019 Galen Arnold <gwarnold@illinois.edu>
-  - The original package includes useful scripts to generate the globus oauth
+  - The original package includes useful scripts to generate the oauth
     map file.
