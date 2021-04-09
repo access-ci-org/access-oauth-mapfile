@@ -17,14 +17,13 @@ REPO=software.xsede.org
 REPO_SOFTWARE=/local/software.xsede.org/development/$PKG
 REPO_SUBDIR=$PKG-$VER-$REL
 
-tar cvfz $REPO_SUBDIR.tgz INSTALL LICENSE.txt mapfileupdate.sh README.md xsede-oauth-mapfile-config-template.json xsede-oauth-mapfile.py
+tar cvfz $REPO_SUBDIR.tgz LICENSE.txt etc var bin docs 
 
 ssh -l xsedesig  $REPO "mkdir -p $REPO_SOFTWARE/$REPO_SUBDIR"
 
 scp -p $PKG-$VER-$REL.tgz xsedesig@$REPO:$REPO_SOFTWARE/$REPO_SUBDIR/
-scp -p README.md xsedesig@$REPO:$REPO_SOFTWARE/$REPO_SUBDIR/
-scp -p README-xsede-oauth-mapfile xsedesig@$REPO:$REPO_SOFTWARE/$REPO_SUBDIR/
-scp -p INSTALL xsedesig@$REPO:$REPO_SOFTWARE/$REPO_SUBDIR/
+scp -p docs/README.md xsedesig@$REPO:$REPO_SOFTWARE/$REPO_SUBDIR/INSTALL
+scp -p docs/CHANGELOG xsedesig@$REPO:$REPO_SOFTWARE/$REPO_SUBDIR/CHANGELOG
 
 ssh -l xsedesig  $REPO "cd $REPO_SOFTWARE; rm latest; ln -s $REPO_SUBDIR latest"
 ssh -l xsedesig  $REPO "cd $REPO_SOFTWARE; ln -fs latest/INSTALL* ./"

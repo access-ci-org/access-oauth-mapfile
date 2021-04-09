@@ -14,7 +14,7 @@ Source0: https://software.xsede.org/development/xsede-oauth-mapfile/xsede-oauth-
 Group: System
 Packager: XSEDE, Galen Arnold, Eric Blau, JP Navarro
 Requires: bash
-Requires: python, python3-requests
+Requires: python3
 #BuildRoot: ~/eclipse-workspace/xci-196/rpmbuild/
 
 # Build with the following syntax:
@@ -45,7 +45,7 @@ cp -a * $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
 
 %files
 %attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/*
-%attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/doc/*
+%attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/docs/*
 %attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/bin/*
 %attr(0600, root, root) /usr/local/share/utils/xsede_oauth_mapfile/etc/*.json
 
