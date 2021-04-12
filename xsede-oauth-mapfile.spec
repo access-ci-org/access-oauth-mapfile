@@ -5,12 +5,12 @@
 #
 Summary: Utility scripts for generating an XSEDE OAuth mapfile
 Name: xsede-oauth-mapfile
-Version: 1.0.4
+Version: 1.0.5
 Release: 1
 License: GPL
 URL: http://xsede.org
 %undefine _disable_source_fetch
-Source0: https://software.xsede.org/development/xsede-oauth-mapfile/xsede-oauth-mapfile-1.0.4-1/xsede-oauth-mapfile-1.0.4-1.tgz
+Source0: https://software.xsede.org/development/xsede-oauth-mapfile/xsede-oauth-mapfile-1.0.5-1/xsede-oauth-mapfile-1.0.5-1.tgz
 Group: System
 Packager: XSEDE, Galen Arnold, Eric Blau, JP Navarro
 Requires: bash
@@ -31,7 +31,7 @@ mapping oauth identities to local user accounts.
 ################################################################################
 echo "BUILDROOT = $RPM_BUILD_ROOT"
 #%setup -n $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
-%setup -c xsede_oauth_mapfile-1.0.4-1
+%setup -c xsede_oauth_mapfile-1.0.5-1
 
 %install
 # create target dirs

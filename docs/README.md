@@ -17,6 +17,8 @@ to map OAuth identities to local accounts.
 
 The mapping information comes from XDCDB and is accessed through an API.
 
+NOTE:  This package includes a script (gcs-mapfile-lookup) with which Globus Connect Server v5.4 can be configured to be able to use the xsede-oauth-mapfile.  Instructions for doing so can be found in the XSEDE Globus Connect Server v5.4 Installation Guide.
+
 INSTALLATION
 
 1) Configure XSEDE RPM repository trust, if installing from RPM
