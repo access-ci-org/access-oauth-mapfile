@@ -45,9 +45,9 @@ def read_mapfile(connector, storage_gateway):
     # "identity_username" local_username[,local_username...]
     #mapfile = "/etc/globus/gridmap-{}".format(storage_gateway)
     if storage_gateway:
-        mapfile = "/etc/grid-security/xsede-user-mapfile-{}".format(storage_gateway)
+        mapfile = "/etc/grid-security/xsede-oauth-mapfile-{}".format(storage_gateway)
     else: 
-        mapfile = "/etc/grid-security/xsede-user-mapfile"
+        mapfile = "/etc/grid-security/xsede-oauth-mapfile"
     mappings = []
 
     mapre = re.compile(r'(\S*)\s+(\S*)$')
