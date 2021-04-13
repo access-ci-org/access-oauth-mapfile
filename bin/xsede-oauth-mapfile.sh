@@ -1,13 +1,15 @@
 #!/bin/bash
 
-# The generated file in the current working directory
+# The base install directory where mapfile generation is run from
+MAP_FILE_BASE=/usr/local/share/utils/xsede_oauth_mapfile
+# The mapfile generated from XDCDB in the current working directory
 GEN_FILE=xsede-oauth-mapfile
+# Other locally managed mapfile entries
+LOCAL_FILE=/etc/grid-security/xsede-oauth-mapfile.local
 # The real map_file used by services
 MAP_FILE=/etc/grid-security/xsede-oauth-mapfile
 # The lockfile
 MAP_LOCK=./GEN_MAP.LOCK
-# The python process for generating the MAP_FILE runs from this directory:
-MAP_FILE_BASE=/usr/local/share/utils/xsede_oauth_mapfile
 
 if [ -d $MAP_FILE_BASE ]
 then
@@ -15,26 +17,26 @@ then
 else
 	# go ahead and linux throw the error
 	cd $MAP_FILE_BASE
-	exit
+	exit $?
 fi
 cd $MAP_FILE_BASE
 if [ -f $MAP_LOCK ]
 then
 	echo "A map_file generations process is running... exiting"
-	exit
+	exit 1
 fi
 
-# do the update work
+# Do the update work
 touch $MAP_LOCK
-./bin/xsede-oauth-mapfile.py
+./bin/xsede-oauth-mapfile.py -m $GEN_FILE
 
-# Try to keep the updates of $MAP_FILE somewhat atomic with cp 
-# leveraging linux kernel write buffering
+# If you have local mappings place them in $LOCAL_FILE
+# Append local mappings to the generated file
+if [ -f $LOCAL_FILE ]
+then
+    cat $LOCAL_FILE >>$GEN_FILE
+fi
+
 cp -p $GEN_FILE $MAP_FILE
-# or alternatively, if you have entries in a master copy map file for
-# special cases (multiple local user names, vendor accounts...), 
-# you may want to copy and append to that file
-#
-# cp /pathto/mastermapfile $MAP_FILE; cat mymapfile >> $MAP_FILE
 
 rm $MAP_LOCK
