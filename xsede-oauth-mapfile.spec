@@ -62,19 +62,17 @@ mkdir -p /etc/grid-security
 cd /etc
 # If not there already, Add link to create_motd to cron.daily
 cd /etc/cron.hourly
-if [ ! -e xsede_oauth_mapfile.sh ]
+if [ ! -L xsede-oauth-mapfile.sh ]
 then
-   ln -s /usr/local/share/utils/xsede_oauth_mapfile/bin/xsede_oauth_mapfile.sh
+   ln -s /usr/local/share/utils/xsede_oauth_mapfile/bin/xsede-oauth-mapfile.sh
 fi
 
 # create the initial oauth map file
-#/usr/local/share/utils/xsede_oauth_mapfile/bin/xsede_oauth_mapfile.sh
+#/usr/local/share/utils/xsede_oauth_mapfile/bin/xsede-oauth-mapfile.sh
 
 %postun
 # remove installed files and links
-rm /etc/cron.hourly/xsede_oauth_mapfile.sh
-rm -f /etc/grid-security/xsede-oauth-mapfile
-rm -rf /usr/local/share/utils/xsede_oauth_mapfile
+rm /etc/cron.hourly/xsede-oauth-mapfile.sh
 
 %clean
 rm -rf $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
