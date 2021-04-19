@@ -49,6 +49,7 @@ cp -a * $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
 %files
 %attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/*
 %attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/docs/*
+%attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/bin/
 %attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/bin/*
 %attr(0600, root, root) /usr/local/share/utils/xsede_oauth_mapfile/etc/*.json
 

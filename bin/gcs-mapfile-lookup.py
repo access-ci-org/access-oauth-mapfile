@@ -57,7 +57,7 @@ def read_mapfile(connector, storage_gateway):
             if m:
                 identity_username = m.group(1)
                 local_username = m.group(2)
-                mapping = (identity_username, ln)
+                mapping = (identity_username, local_username)
                 mappings.append(mapping)
     return mappings
 
