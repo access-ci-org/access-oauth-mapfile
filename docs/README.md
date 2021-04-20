@@ -31,9 +31,9 @@ Install package:
      $ yum install xsede-oauth-mapfile
 
 The RPM installs files under /usr/local/share/utils/xsede_user_mapfile/ by default,
-except as noted below. The default location for the mapfile is:
+except as noted below. The default location for the generated mapfile is:
 
-    /usr/local/etc/grid-security/xsede-oauth-mapfile
+    /etc/grid-security/xsede-oauth-mapfile
 
 #### TAR Install
 
@@ -49,19 +49,21 @@ Execute:
 
 ## Request API Access Key
 
-If you don't have an XDCDB access API-KEY from a previous install obtain one using
-the instructions at https://xsede-xdcdb-api.xsede.org/. In the request specify the
-"spacct" agent and which XDCDB resource name you want mapped accounts for. XSEDE's
-active XDCDB resource names are listed at:
+If you don't have an XDCDB access API-KEY from a previous xsede-oauth-mapfile install,
+request one by following the instructions at https://xsede-xdcdb-api.xsede.org/ which
+includes Clicking on the "Generate APIKEY" link and following the displayed instructions.
+In the e-mail to help@xsede.org specify <AGENT> "spacct" and which XDCDB resource name
+you want mapped accounts for. XSEDE's active XDCDB resource names are listed at:
 * https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html
 
-The request will register your xsede-oauth-mapfile deployment in XDCDB and provide
+The e-mail request will register your xsede-oauth-mapfile deployment in XDCDB and provide
 you an API-KEY for the xsede-oauth-mapfile tool to use to access the XDCDB API.
 
 ### Configure xsede-oauth-mapfile
 
-If you have an etc/xsede-oauth-mapfile-config.json from a previous install, copy it
-to this install, otherwise create it using etc/xsede-oauth-mapfile-config-template.json.
+If you have an etc/xsede-oauth-mapfile-config.json from a previous install, copy it to
+this install etc/ directory, otherwise create it by copying the newly RPM/TAR installed
+etc/xsede-oauth-mapfile-config-template.json.
 
 Edit etc/xsede-oauth-mapfile-config.json and set:
 
