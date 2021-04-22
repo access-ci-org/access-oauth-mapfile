@@ -1,6 +1,7 @@
 V 1.0.5 20210412 Eric
   - Add gcs-mapfile-lookup to this package
   - Add LOCAL_FILE=/etc/grid-security/xsede-oauth-mapfile.local support in xsede-oauth-mapfile.sh
+  - Improve README.md explanation of what XDCDB Resource Name to use in configuration
 V 0.0.4 20200409 Eric & JP
   - Replace old package name references with xsede-oauth-mapfile
   - Move docs to docs/ and add CHANGELOG

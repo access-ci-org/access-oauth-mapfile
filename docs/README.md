@@ -8,16 +8,16 @@ This package generates a file called **xsede-oauth-mapfile** containing entries 
 
 Each entry maps an XSEDE OAuth identity of the form {xsede_username}@xsede.org
 to the corresponding local username on a specific XSEDE resource. An XSEDE OAuth
-identity may have multiple lines mapping it to different local usernames.
-The mapping information comes from the XSEDE Central Database (XCDB) and is accessed
-by this software through an API.
+identity may have multiple lines mapping it to different local usernames. The mapping
+information comes from the XSEDE Central Database (XCDB) and is accessed by this
+software through an API.
 
 XSEDE's Globus Connect Server (GCS) v5.4+ and other tools use these mappings to
 access local resources as the authenticated user.
 
 ## Install
 
-Choose either RPM or TAR install
+Choose either RPM or TAR install.
 
 #### RPM Install
 
@@ -30,16 +30,16 @@ Install package:
 
      $ yum install xsede-oauth-mapfile
 
-The RPM installs files under /usr/local/share/utils/xsede_user_mapfile/ by default,
+The RPM installs files under /usr/local/share/utils/xsede_oauth_mapfile/ by default,
 except as noted below. The default location for the generated mapfile is:
 
     /etc/grid-security/xsede-oauth-mapfile
 
 #### TAR Install
 
-Download the latest Production tar or Development/Testing tar from either:
+Download the latest Production or Development/Testing tar from either:
 * https://software.xsede.org/production/xsede-oauth-mapfile/latest
-* https://software.xsede.org/production/xsede-oauth-mapfile/
+* https://software.xsede.org/development/xsede-oauth-mapfile/latest
 
 Execute:
 
@@ -50,10 +50,14 @@ Execute:
 ## Request API Access Key
 
 If you don't have an XDCDB access API-KEY from a previous xsede-oauth-mapfile install,
-request one by following the instructions at https://xsede-xdcdb-api.xsede.org/ which
-includes Clicking on the "Generate APIKEY" link and following the displayed instructions.
-In the e-mail to help@xsede.org specify <AGENT> "spacct" and which XDCDB resource name
-you want mapped accounts for. XSEDE's active XDCDB resource names are listed at:
+request one by following the instructions at https://xsede-xdcdb-api.xsede.org/ by Clicking
+on the "Generate APIKEY" link and following the displayed instructions. In the e-mail to
+help@xsede.org specify <AGENT> "spacct". If you are accessing the API for an XSEDE
+allocated resource, provide the official XDCDB Resource Name, like "expanse.sdsc.xsede.org".
+If you are testing the xsede-oauth-mapfile tool, or accessing mapping information for some
+other reason, provide the fully qualified hostname that will access the API as the XDCDB Resource
+Name. The XDCDB Resource Name in the request will not limit which resources can be looked
+up with API calls. XSEDE's active XDCDB Resource Names are listed at:
 * https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html
 
 The e-mail request will register your xsede-oauth-mapfile deployment in XDCDB and provide
