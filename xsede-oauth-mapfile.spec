@@ -48,10 +48,13 @@ cp -a * $RPM_BUILD_ROOT/usr/local/share/utils/xsede_oauth_mapfile
 
 %files
 %attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/*
+%attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/docs/
 %attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/docs/*
 %attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/bin/
 %attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/bin/*
+%attr(0755, root, root) /usr/local/share/utils/xsede_oauth_mapfile/etc/
 %attr(0600, root, root) /usr/local/share/utils/xsede_oauth_mapfile/etc/*.json
+%attr(0744, root, root) /usr/local/share/utils/xsede_oauth_mapfile/etc/gcs-mapfile-lookup.json
 
 %pre
 mkdir -p /etc/grid-security
