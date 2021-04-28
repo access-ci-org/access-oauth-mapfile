@@ -6,11 +6,10 @@ This package generates a file called **xsede-oauth-mapfile** containing entries 
 
     {xsede_username}@xsede.org {local_username}
 
-Each entry maps an XSEDE OAuth identity of the form {xsede_username}@xsede.org
-to the corresponding local username on a specific XSEDE resource. An XSEDE OAuth
-identity may have multiple lines mapping it to different local usernames. The mapping
-information comes from the XSEDE Central Database (XCDB) and is accessed by this
-software through an API.
+Each entry maps an XSEDE OAuth identity in the form {xsede_username}@xsede.org to the
+corresponding local username on a specific XSEDE resource. An XSEDE OAuth identity
+may have multiple lines mapping it to multiple local usernames. These mappings come
+from the XSEDE Central Database (XCDB) and are accessed by this tool through an API.
 
 XSEDE's Globus Connect Server (GCS) v5.4+ and other tools use these mappings to
 access local resources as the authenticated user.
@@ -38,8 +37,8 @@ except as noted below. The default location for the generated mapfile is:
 #### TAR Install
 
 Download the latest Production or Development/Testing tar from either:
-* https://software.xsede.org/production/xsede-oauth-mapfile/latest
-* https://software.xsede.org/development/xsede-oauth-mapfile/latest
+  * [https://software.xsede.org/production/xsede-oauth-mapfile/latest](https://software.xsede.org/production/xsede-oauth-mapfile/latest)
+  * [https://software.xsede.org/development/xsede-oauth-mapfile/latest](https://software.xsede.org/development/xsede-oauth-mapfile/latest)
 
 Execute:
 
@@ -50,14 +49,14 @@ Execute:
 ## Request API Access Key
 
 If you don't have an XDCDB access API-KEY from a previous xsede-oauth-mapfile install,
-request one by following the instructions at https://xsede-xdcdb-api.xsede.org/ by Clicking
-on the "Generate APIKEY" link and following the displayed instructions. In the e-mail to
-help@xsede.org specify <AGENT> "spacct". If you are accessing the API for an XSEDE
-allocated resource, provide the official XDCDB Resource Name, like "expanse.sdsc.xsede.org".
-If you are testing the xsede-oauth-mapfile tool, or accessing mapping information for some
-other reason, provide the fully qualified hostname that will access the API as the XDCDB Resource
-Name. The XDCDB Resource Name in the request will not limit which resources can be looked
-up with API calls. XSEDE's active XDCDB Resource Names are listed at:
+request one by following the instructions at https://xsede-xdcdb-api.xsede.org/, Clicking
+on the "Generate APIKEY" link, and following the displayed instructions. In the e-mail to
+help@xsede.org specify <AGENT> "spacct". If you are accessing the API for an XSEDE allocated
+resource, provide the official XDCDB Resource Name, like "expanse.sdsc.xsede.org". If you are
+are testing the xsede-oauth-mapfile tool, or accessing mapping information for some other
+reason, provide the fully qualified hostname that will access the API as the XDCDB Resource
+Name. The XDCDB Resource Name is the API Client ID and does not limit which resources mappings
+can be looked up with API calls. XSEDE's active XDCDB Resource Names are listed at:
 * https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html
 
 The e-mail request will register your xsede-oauth-mapfile deployment in XDCDB and provide
@@ -72,8 +71,14 @@ etc/xsede-oauth-mapfile-config-template.json.
 Edit etc/xsede-oauth-mapfile-config.json and set:
 
     "XA-AGENT": "spacct",
-    "XA-RESOURCE": "<XDCDB resource name>",
+    "XA-RESOURCE": "<XDCDB resource name> or <other fully qualified API client hostname>",
+    "MAP-RESOURCE": "<XDCDB resource name>",
     "XA-API-KEY": "<your API-KEY>"
+
+Where "XA-RESOURCE" identifies the Client ID (XDCDB Resource Name above) that is retrieving
+the mappings, and "MAP-RESOURCE" is which XSEDE resource mappings you are retrieving. On a
+production resource both of these are normally the same, but in a testing or other situation
+a testing server / XA-RESOURCE may be accessing mappings for a production MAP-RESOURCE.
 
 The API-KEY may be from a previous xsede-oauth-mapfile configuration or a new one
 in the previous step.

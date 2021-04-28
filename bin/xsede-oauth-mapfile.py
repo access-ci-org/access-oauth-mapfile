@@ -97,7 +97,8 @@ class Generate_Mapfile():
              'XA-RESOURCE': self.config.get('XA-RESOURCE'),
              'XA-API-KEY': self.config.get('XA-API-KEY')}
         self.API_HOST = 'xsede-xdcdb-api.xsede.org'
-        self.RESOURCE = self.config.get('XA-RESOURCE')
+        # If no MAP-RESOURCE is specified, use the XA-RESOURCE
+        self.RESOURCE = self.config.get('MAP-RESOURCE') or self.config.get('XA-RESOURCE')
 
     def exit_signal(self, signum, frame):
         self.logger.critical('Caught signal={}({}), exiting with rc={}'.format(signum, signal.Signals(signum).name, signum))

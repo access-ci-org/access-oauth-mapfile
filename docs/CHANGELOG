@@ -1,8 +1,14 @@
+V 1.0.6 20210428 JP
+  - Introduce MAP-RESOURCE to set the resource we want mappings for, which may be different than
+    XA-RESOURCE which is the resource/client authorized to retrieve mappings and can be a testing
+    server
+
 V 1.0.5 20210412 Eric
   - Add gcs-mapfile-lookup to this package
   - Add LOCAL_FILE=/etc/grid-security/xsede-oauth-mapfile.local support in xsede-oauth-mapfile.sh
   - Improve README.md explanation of what XDCDB Resource Name to use in configuration
   - Release 6 fixes permissions issues with supporting directories and files
+
 V 0.0.4 20200409 Eric & JP
   - Replace old package name references with xsede-oauth-mapfile
   - Move docs to docs/ and add CHANGELOG
