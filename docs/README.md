@@ -102,7 +102,7 @@ XDCDB generated mappings and local mappings will be combined into the MAP_FILE.
 Execute as root:
 
     $ cd /etc/cron.hourly
-    $ ln -s /usr/local/share/utils/xsede_oauth_mapfile/bin/xsede_oauth_mapfile.sh
+    $ ln -s /usr/local/share/utils/xsede_oauth_mapfile/bin/xsede-oauth-mapfile.sh
 
 ### Obtaining Support
 
