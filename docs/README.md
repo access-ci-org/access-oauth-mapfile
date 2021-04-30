@@ -43,6 +43,10 @@ Execute:
     $ cd {arbitrary_path}/xsede-oauth-mapfile-<version>
     $ tar -xzf {downloaded_file}
 
+Edit the untarred bin/xsede-oauth-mapfile.sh and set MAP_FILE_BASE to the directory that you
+just untarred.
+
+
 ## Request API Access Key
 
 If you don't have an XDCDB access API-KEY from a previous xsede-oauth-mapfile install,
@@ -56,8 +60,8 @@ Name. The XDCDB Resource Name is the API Client ID and does not limit which reso
 can be looked up with API calls. XSEDE's active XDCDB Resource Names are listed at:
 * https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html
 
-The email request will register your xsede-oauth-mapfile deployment in XDCDB and authorize your
-xsede-oauth-mapfile tool to access the XDCDB API using your API-KEY.
+The email request will register your xsede-oauth-mapfile deployment in XDCDB and authorize it
+to access the XDCDB API using your API-KEY.
 
 ### Configure xsede-oauth-mapfile
 
@@ -83,11 +87,6 @@ in the previous step.
 Set the permissions for the config for read-only by root to keep the API-KEY private:
 
     $ chmod 0600 etc/xsede-oauth-mapfile-config.json
-
-In bin/xsede-oauth-mapfile.sh:
- * Set MAP_FILE to where you want your production mapfile place, the default is:
-    /etc/grid-security/xsede-oauth-mapfile
- * Set MAP_FILE_BASE to your base xsede-oauth-mapfile installation directory
 
 If you have additional local mappings that don't come from XDCDB, place them in
 /etc/grid-security/xsede-oauth-mapfile.local, or customize the LOCAL_FILE variable
