@@ -1,6 +1,7 @@
 V 1.0.6 20210430 JP
   - Don't mention the MAP_FILE location in the install step where it is confusing, instead mention
     it in the configuration step
+  - Clarify the role of the APIKEY in the README 
 
 V 1.0.6 20210428 JP
   - Introduce MAP-RESOURCE to set the resource we want mappings for, which may be different than

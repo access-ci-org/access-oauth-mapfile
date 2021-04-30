@@ -56,8 +56,8 @@ Name. The XDCDB Resource Name is the API Client ID and does not limit which reso
 can be looked up with API calls. XSEDE's active XDCDB Resource Names are listed at:
 * https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html
 
-The e-mail request will register your xsede-oauth-mapfile deployment in XDCDB and provide
-you an API-KEY for the xsede-oauth-mapfile tool to use to access the XDCDB API.
+The email request will register your xsede-oauth-mapfile deployment in XDCDB and authorize your
+xsede-oauth-mapfile tool to access the XDCDB API using your API-KEY.
 
 ### Configure xsede-oauth-mapfile
 
