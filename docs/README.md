@@ -29,10 +29,7 @@ Install package:
 
      $ yum install xsede-oauth-mapfile
 
-The RPM installs files under /usr/local/share/utils/xsede_oauth_mapfile/ by default,
-except as noted below. The default location for the generated mapfile is:
-
-    /etc/grid-security/xsede-oauth-mapfile
+The RPM installs files under /usr/local/share/utils/xsede_oauth_mapfile/ by default.
 
 #### TAR Install
 
@@ -88,7 +85,8 @@ Set the permissions for the config for read-only by root to keep the API-KEY pri
     $ chmod 0600 etc/xsede-oauth-mapfile-config.json
 
 In bin/xsede-oauth-mapfile.sh:
- * Set MAP_FILE to where you want your production mapfile
+ * Set MAP_FILE to where you want your production mapfile place, the default is:
+    /etc/grid-security/xsede-oauth-mapfile
  * Set MAP_FILE_BASE to your base xsede-oauth-mapfile installation directory
 
 If you have additional local mappings that don't come from XDCDB, place them in
