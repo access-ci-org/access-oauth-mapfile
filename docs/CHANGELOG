@@ -1,3 +1,7 @@
+V 1.0.6 20210507 JP
+  - Explain in the README to also update the bin/gcs-mapfile-lookup.py script if changing the default
+    /etc/grid-security/ path to the mapfile.
+
 V 1.0.6 20210430 JP
   - Don't mention the MAP_FILE location in the install step where it is confusing, instead mention
     it in the configuration step

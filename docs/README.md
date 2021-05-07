@@ -82,7 +82,7 @@ production resource both of these are normally the same, but in a testing or oth
 a testing server / XA-RESOURCE may be accessing mappings for a production MAP-RESOURCE.
 
 The API-KEY may be from a previous xsede-oauth-mapfile configuration or a new one
-in the previous step.
+from the previous step.
 
 Set the permissions for the config for read-only by root to keep the API-KEY private:
 
@@ -94,6 +94,9 @@ in bin/xsede-oauth-mapfile.sh to point to your local mappings.
 
 XDCDB generated mappings and local mappings will be combined into the MAP_FILE.
 
+If you change the default path of the mapfiles from /etc/grid-security/ to another
+directory, also update the "mapfile = " paths in the bin/gcs-mapfile-lookup.py script. 
+
 ### Setup to generate using cron
 
 Execute as root:
@@ -101,7 +104,7 @@ Execute as root:
     $ cd /etc/cron.hourly
     $ ln -s /usr/local/share/utils/xsede_oauth_mapfile/bin/xsede-oauth-mapfile.sh
 
-### Obtaining Support
+### Getting Support
 
 Report xsede-oauth-mapfile bugs, questions, and suggestions to help@xsede.org.
 
