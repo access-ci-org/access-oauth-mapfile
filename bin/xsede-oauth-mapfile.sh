@@ -6,10 +6,11 @@ MAP_FILE=/etc/grid-security/xsede-oauth-mapfile
 CONFIG_FILE=etc/xsede-oauth-mapfile-config.json
 # The mapfile generated from XDCDB in the current working directory
 GEN_FILE=xsede-oauth-mapfile
-# The base install directory where mapfile generation is run from
-MAP_FILE_BASE=/usr/local/share/utils/xsede_oauth_mapfile
 # Other locally managed mapfile entries
 LOCAL_FILE=/etc/grid-security/xsede-oauth-mapfile.local
+
+# The base install directory where mapfile generation is run from
+MAP_FILE_BASE=/usr/local/share/utils/xsede_oauth_mapfile
 # The lockfile
 #MAP_LOCK=./GEN_MAP.LOCK
 MAP_LOCK=./${GEN_FILE}.LOCK
