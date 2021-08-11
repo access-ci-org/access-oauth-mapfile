@@ -1,3 +1,6 @@
+V 1.0.6 20210811 Eric
+  - Add command line options to write to stdout, and to specify what resource to look up.  Command line overrides configuration file.
+  - Add CONFIG_FILE definition in xsede-oauth-mapfile.sh (defaults to etc/xsede-oauth-mapfile-config.json), and invokes xsede-oauth-mapfile.py with the config option.  This allows a site to make modified copies of the shell script to create mapfiles for different resources in cron.
 V 1.0.6 20210507 JP
   - Explain in the README to also update the bin/gcs-mapfile-lookup.py script if changing the default
     /etc/grid-security/ path to the mapfile.
