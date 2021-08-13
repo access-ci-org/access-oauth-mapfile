@@ -108,6 +108,32 @@ Execute as root:
 
 Report xsede-oauth-mapfile bugs, questions, and suggestions to help@xsede.org.
 
+### Advanced Usage
+
+xsede-oauth-mapfile can be configured to create and maintain multiple different mapfiles, including ones based on the sets of authorized users for multiple different resources.
+
+To create both a mapfile for resource A and one for resource B on the same machine, do the following:
+1. Copy /usr/local/share/utils/xsede-oauth-mapfile/bin/xsede-oauth-mapfile.sh as /etc/cron.hourly/A.sh
+2. Copy /usr/local/share/utils/xsede-oauth-mapfile/bin/xsede-oauth-mapfile.sh as /etc/cron.hourly/B.sh
+3. Edit /etc/cron.hourly/A.sh, setting the following values:
+  * MAP_FILE=/etc/grid-security/xsede-oauth-mapfile-A
+  * CONFIG_FILE=etc/xsede-oauth-mapfile-config-A.json
+  * GEN_FILE=xsede-oauth-mapfile-A
+  * LOCAL_FILE=/etc/grid-security/xsede-oauth-mapfile-A.local
+4. Edit /etc/cron.hourly/B.sh, setting the following values:
+  * MAP_FILE=/etc/grid-security/xsede-oauth-mapfile-B
+  * CONFIG_FILE=etc/xsede-oauth-mapfile-config-B.json
+  * GEN_FILE=xsede-oauth-mapfile-B
+  * LOCAL_FILE=/etc/grid-security/xsede-oauth-mapfile-B.local
+5. copy /usr/local/share/utils/xsede-oauth-mapfile/etc/xsede-oauth-mapfile-config-template to /usr/local/share/utils/xsede-oauth-mapfile/etc/xsed-oauth-mapfile-config-A.json
+6. edit /usr/local/share/utils/xsede-oauth-mapfile/etc/xsed-oauth-mapfile-config-A.json, setting XA-RESOURCE and XA-API-KEY to the values used when requesting your API key.  Set MAP_RESOURCE to be the XSEDE resource you wish to map oauth identity information for your "A" resource
+7. copy /usr/local/share/utils/xsede-oauth-mapfile/etc/xsede-oauth-mapfile-config-template to /usr/local/share/utils/xsede-oauth-mapfile/etc/xsed-oauth-mapfile-config-B.json
+8. edit /usr/local/share/utils/xsede-oauth-mapfile/etc/xsed-oauth-mapfile-config-A.json, setting XA-RESOURCE and XA-API-KEY to the values used when requesting your API key.  Set MAP_RESOURCE to be the XSEDE resource you wish to map oauth identity information for your "B" resource
+9. Define any additional mappings for your "A" resource in/etc/grid-security/xsede-oauth-mapfile-A.local
+10. Define any additional mappings for your "B" resource in/etc/grid-security/xsede-oauth-mapfile-B.local
+11. Your mapfile for your "A" resource will be updated hourly by cron to the file /etc/grid-security/xsede-oauth-mapfile-A
+12. Your mapfile for your "B" resource will be updated hourly by cron to the file /etc/grid-security/xsede-oauth-mapfile-B
+
 ## NOTES
 
 **bin/xsede-oauth-mapfile.py** - Python map file generator.

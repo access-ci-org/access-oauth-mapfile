@@ -41,6 +41,10 @@ class Generate_Mapfile():
                             help='Only run an Auth test')
         parser.add_argument('--pdb', action='store_true', \
                             help='Run with the Python debugger')
+        parser.add_argument('-s', '--stdout', action='store_true', dest='stdout', required=False, \
+                            help='Use stdout', default=False)
+        parser.add_argument('-r', '--resource', action='store', dest='resource', required=False, \
+                            help='Resource to query', default=False)
         self.args = parser.parse_args()
 
         # Trace for debugging as early as possible
@@ -97,8 +101,8 @@ class Generate_Mapfile():
              'XA-RESOURCE': self.config.get('XA-RESOURCE'),
              'XA-API-KEY': self.config.get('XA-API-KEY')}
         self.API_HOST = 'xsede-xdcdb-api.xsede.org'
-        # If no MAP-RESOURCE is specified, use the XA-RESOURCE
-        self.RESOURCE = self.config.get('MAP-RESOURCE') or self.config.get('XA-RESOURCE')
+        # If no resource is specified on the command line, use the MAP-RESOURCE
+        self.RESOURCE = self.args.resource or self.config.get('MAP-RESOURCE') or self.config.get('XA-RESOURCE')
 
     def exit_signal(self, signum, frame):
         self.logger.critical('Caught signal={}({}), exiting with rc={}'.format(signum, signal.Signals(signum).name, signum))
@@ -139,15 +143,19 @@ class Generate_Mapfile():
         mydata = json.loads(myresult)
 
         MAPFILE = self.args.mapfile
+        USE_STDOUT = self.args.stdout
         USER_COUNT = 0
         MAP_COUNT = 0
         try:
-            with open(MAPFILE, 'w') as output_file:
-                for user in mydata['result']['users']:
-                    for name in user['usernames']:
-                        output_file.write('{}@xsede.org {}\n'.format(user['portalLogin'], name))
-                        MAP_COUNT += 1
-                    USER_COUNT += 1
+            #with open(MAPFILE, 'w') as output_file:
+            output_file = sys.stdout if USE_STDOUT else open(MAPFILE, 'w') 
+            for user in mydata['result']['users']:
+                for name in user['usernames']:
+                    output_file.write('{}@xsede.org {}\n'.format(user['portalLogin'], name))
+                    MAP_COUNT += 1
+                USER_COUNT += 1
+            if output_file is not sys.stdout:
+                output_file.close()
         except IOError as e:
             self.logger.critical('Error "{}" writing mapfile={}'.format(e, MAPFILE))
             sys.exit(1)
