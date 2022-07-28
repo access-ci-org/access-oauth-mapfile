@@ -47,7 +47,7 @@ def read_mapfile(connector, storage_gateway):
     if storage_gateway:
         mapfile = "/etc/grid-security/xsede-oauth-mapfile-{}".format(storage_gateway)
     else: 
-        mapfile = "/etc/grid-security/xsede-oauth-mapfile"
+        mapfile = "/etc/grid-security/access-oauth-mapfile"
     mappings = []
 
     mapre = re.compile(r'(\S*)\s+(\S*)$')

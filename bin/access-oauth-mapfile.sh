@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # The real map_file used by services
-MAP_FILE=/etc/grid-security/xsede-oauth-mapfile
-# The config file used by this invokation of the xsede-oauth-mapfile script
-CONFIG_FILE=etc/xsede-oauth-mapfile-config.json
+MAP_FILE=/etc/grid-security/access-oauth-mapfile
+# The config file used by this invokation of the access-oauth-mapfile script
+CONFIG_FILE=etc/access-oauth-mapfile-config.json
 # The mapfile generated from XDCDB in the current working directory
-GEN_FILE=xsede-oauth-mapfile
+GEN_FILE=access-oauth-mapfile
 # Other locally managed mapfile entries
-LOCAL_FILE=/etc/grid-security/xsede-oauth-mapfile.local
+LOCAL_FILE=/etc/grid-security/access-oauth-mapfile.local
 
 # The base install directory where mapfile generation is run from
-MAP_FILE_BASE=/usr/local/share/utils/xsede_oauth_mapfile
+MAP_FILE_BASE=/usr/local/share/utils/access_oauth_mapfile
 # The lockfile
 #MAP_LOCK=./GEN_MAP.LOCK
 MAP_LOCK=./${GEN_FILE}.LOCK
@@ -33,7 +33,7 @@ fi
 
 # Do the update work
 touch $MAP_LOCK
-./bin/xsede-oauth-mapfile.py -m $GEN_FILE -c $CONFIG_FILE
+./bin/access-oauth-mapfile.py -m $GEN_FILE -c $CONFIG_FILE
 
 # If you have local mappings place them in $LOCAL_FILE
 # Append local mappings to the generated file

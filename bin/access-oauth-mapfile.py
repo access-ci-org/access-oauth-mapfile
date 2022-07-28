@@ -22,6 +22,7 @@ import pwd
 import signal
 import ssl
 import sys
+from urllib.parse import urlparse
 
 # Used during initialization before loggin is enabled
 def eprint(*args, **kwargs):
@@ -34,9 +35,11 @@ class Generate_Mapfile():
         parser.add_argument('-l', '--log', action='store', \
                             help='Logging level (default=info)')
         parser.add_argument('-c', '--config', action='store', dest='config', required=False, \
-                            help='Configuration file', default='etc/xsede-oauth-mapfile-config.json')
+                            help='Configuration file', default='etc/access-oauth-mapfile-config.json')
         parser.add_argument('-m', '--mapfile', action='store', dest='mapfile', required=False, \
-                            help='Map file name', default='xsede-oauth-mapfile')
+                            help='Map file name', default='access-oauth-mapfile')
+        parser.add_argument('-u', '--url', action='store', dest='apiurl', required=False, \
+                            help='Hostname of the spacct API server')
         parser.add_argument('-t', '--test', action='store_true', \
                             help='Only run an Auth test')
         parser.add_argument('--pdb', action='store_true', \
@@ -85,7 +88,7 @@ class Generate_Mapfile():
         self.logger.setLevel(loglevel_num)
         self.formatter = logging.Formatter(fmt='%(asctime)s.%(msecs)03d %(levelname)s %(message)s', \
                                            datefmt='%Y/%m/%d %H:%M:%S')
-        self.LOG_FILE = self.config.get('LOG_FILE', 'var/xsede-oauth-mapfile.log')
+        self.LOG_FILE = self.config.get('LOG_FILE', 'var/access-oauth-mapfile.log')
         self.handler = logging.handlers.TimedRotatingFileHandler(self.LOG_FILE, \
             when='W6', backupCount=999, utc=True)
         self.handler.setFormatter(self.formatter)
@@ -100,7 +103,21 @@ class Generate_Mapfile():
         self.API_HEADERS = {'XA-AGENT': self.config.get('XA-AGENT'),
              'XA-RESOURCE': self.config.get('XA-RESOURCE'),
              'XA-API-KEY': self.config.get('XA-API-KEY')}
-        self.API_HOST = 'xsede-xdcdb-api.xsede.org'
+        apiurl = self.args.apiurl
+        if not apiurl:
+            self.API_HOST = 'allocations-api.access-ci.org' 
+            self.API_PATH = '/acdb/spacct/'
+        else:
+            url = urlparse(apiurl)
+            if not url.netloc:
+                self.API_HOST = 'allocations-api.access-ci.org' 
+            else:
+                self.API_HOST = url.netloc 
+            if not url.path:
+                self.API_PATH = '/acdb/spacct/'
+            else:
+                self.API_HOST = url.path 
+
         # If no resource is specified on the command line, use the MAP-RESOURCE
         self.RESOURCE = self.args.resource or self.config.get('MAP-RESOURCE') or self.config.get('XA-RESOURCE')
 
@@ -119,7 +136,7 @@ class Generate_Mapfile():
         """
         ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
         conn = httplib.HTTPSConnection(host=self.API_HOST, port=443, context=ctx)
-        conn.request('GET', '/spacct/auth_test', None, self.API_HEADERS)
+        conn.request('GET', self.API_PATH, None, self.API_HEADERS)
         response = conn.getresponse()
         if response.status != 200:
             self.logger.critical('Authentication with {} FAILED.'.format(self.API_HOST))
@@ -128,10 +145,17 @@ class Generate_Mapfile():
         myresult = response.read().decode("utf-8-sig")
         return(0)
 
-    def Generate_Mapfile(self):
+    def Fallback_to_XSEDE(self):
         """
-        Make the real query and generate a mapfile
+        Query the XSEDE server as a fallback
         """
+        import datetime
+        access_onset = datetime.date(2022,9,1)
+        today = datetime.data.today()
+        if today >= access_onset:
+            self.logger.critical('XSEDE has ended, cannot fall back to XSEDE erver.')
+            self.exit(1)
+
         ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
         conn = httplib.HTTPSConnection(host='xsede-xdcdb-api.xsede.org', port=443, context=ctx)
         conn.request('GET', '/spacct/v1/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
@@ -139,6 +163,21 @@ class Generate_Mapfile():
         if response.status != 200:
             self.logger.critical('Authentication with xdcdb-api-test failed.')
             self.exit(1)
+
+        return(response)
+       
+
+    def Generate_Mapfile(self):
+        """
+        Make the real query and generate a mapfile
+        """
+        ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        conn = httplib.HTTPSConnection(host=self.API_HOST, port=443, context=ctx)
+        conn.request('GET', self.API_PATH+'/{}'.format(self.RESOURCE), None, self.API_HEADERS)
+        response = conn.getresponse()
+        if response.status != 200:
+            self.logger.critical('Connection to {} failed.'.format(self.API_HOST))
+            response = self.Fallback_to_XSEDE()
         myresult = response.read().decode("utf-8-sig")
         mydata = json.loads(myresult)
 
@@ -151,7 +190,7 @@ class Generate_Mapfile():
             output_file = sys.stdout if USE_STDOUT else open(MAPFILE, 'w') 
             for user in mydata['result']['users']:
                 for name in user['usernames']:
-                    output_file.write('{}@xsede.org {}\n'.format(user['portalLogin'], name))
+                    output_file.write('{}@access.org {}\n'.format(user['portalLogin'], name))
                     MAP_COUNT += 1
                 USER_COUNT += 1
             if output_file is not sys.stdout:
