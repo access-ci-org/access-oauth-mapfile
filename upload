@@ -1,6 +1,6 @@
 #!/bin/sh -x
 
-PKG=xsede-oauth-mapfile
+PKG=access-oauth-mapfile
 VER=$(cat VERSION)
 REL=$(cat RELEASE)
 

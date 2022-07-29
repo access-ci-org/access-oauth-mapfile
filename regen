@@ -3,17 +3,24 @@
 PKG=access-oauth-mapfile
 VER=$(cat VERSION)
 REL=$(cat RELEASE)
-RPMDIR="/home/vagrant/rpmbuild/RPMS/noarch/"
+#RPMDIR="/home/vagrant/rpmbuild/RPMS/noarch/"
 RPMFILE=$RPMDIR/$PKG-$VER-$REL.noarch.rpm
 export VER
 export REL
 echo $RPMFILE
+CURRENTDIR=`pwd`
+echo $CURRENTDIR
 
 if [ ! -e VERSION ]; then
   echo "You may not be in the right place to run upload"
   echo "Please run from the root of the package"
   exit 1
 fi
+mkdir -p $CURRENTDIR/build/bdist.linux_x86_64/rpm/
+#rpmbuild --target noarch -bb $PKG.spec
+rpmbuild --define "_prefix /usr" --define "_arch x86_64" --define "_topdir $CURRENTDIR/build/bdist.linux_x86_64/rpm" --bb --target x86_64-redhat-linux --clean $PKG.spec --verbose
 
-rpmbuild --target noarch -bb $PKG.spec
+mkdir dist
+cp $CURRENTDIR/build/bdist.linux_x86_64/rpm/RPMS/noarch/$RPMFILE ./dist
+
 

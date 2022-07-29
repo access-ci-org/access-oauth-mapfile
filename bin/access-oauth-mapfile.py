@@ -4,6 +4,7 @@ Generates an OAuth compatible map_file for use with GCS, OAuth SSH, and other se
 
 Galen Arnold, XSEDE, July 2019
 JP Navarro, April 2021
+Eric Blau, July 2022
 """
 
 # To setup XA-API-KEY in the .json config file, see:
@@ -39,7 +40,7 @@ class Generate_Mapfile():
         parser.add_argument('-m', '--mapfile', action='store', dest='mapfile', required=False, \
                             help='Map file name', default='access-oauth-mapfile')
         parser.add_argument('-u', '--url', action='store', dest='apiurl', required=False, \
-                            help='Hostname of the spacct API server')
+                            help='Base URL of the spacct API server')
         parser.add_argument('-t', '--test', action='store_true', \
                             help='Only run an Auth test')
         parser.add_argument('--pdb', action='store_true', \
@@ -106,7 +107,7 @@ class Generate_Mapfile():
         apiurl = self.args.apiurl
         if not apiurl:
             self.API_HOST = 'allocations-api.access-ci.org' 
-            self.API_PATH = '/acdb/spacct/'
+            self.API_PATH = '/acdb/'
         else:
             url = urlparse(apiurl)
             if not url.netloc:
@@ -114,9 +115,9 @@ class Generate_Mapfile():
             else:
                 self.API_HOST = url.netloc 
             if not url.path:
-                self.API_PATH = '/acdb/spacct/'
+                self.API_PATH = '/acdb/'
             else:
-                self.API_HOST = url.path 
+                self.API_PATH = url.path 
 
         # If no resource is specified on the command line, use the MAP-RESOURCE
         self.RESOURCE = self.args.resource or self.config.get('MAP-RESOURCE') or self.config.get('XA-RESOURCE')
@@ -136,7 +137,7 @@ class Generate_Mapfile():
         """
         ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
         conn = httplib.HTTPSConnection(host=self.API_HOST, port=443, context=ctx)
-        conn.request('GET', self.API_PATH, None, self.API_HEADERS)
+        conn.request('GET', self.API_PATH+"/spacct/auth_test", None, self.API_HEADERS)
         response = conn.getresponse()
         if response.status != 200:
             self.logger.critical('Authentication with {} FAILED.'.format(self.API_HOST))
@@ -150,8 +151,9 @@ class Generate_Mapfile():
         Query the XSEDE server as a fallback
         """
         import datetime
+        self.logger.critical('Falling back to querying XSEDE server.')
         access_onset = datetime.date(2022,9,1)
-        today = datetime.data.today()
+        today = datetime.date.today()
         if today >= access_onset:
             self.logger.critical('XSEDE has ended, cannot fall back to XSEDE erver.')
             self.exit(1)
@@ -161,7 +163,7 @@ class Generate_Mapfile():
         conn.request('GET', '/spacct/v1/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
         response = conn.getresponse()
         if response.status != 200:
-            self.logger.critical('Authentication with xdcdb-api-test failed.')
+            self.logger.critical('Falling back to XSEDE server failed.')
             self.exit(1)
 
         return(response)
@@ -173,10 +175,10 @@ class Generate_Mapfile():
         """
         ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
         conn = httplib.HTTPSConnection(host=self.API_HOST, port=443, context=ctx)
-        conn.request('GET', self.API_PATH+'/{}'.format(self.RESOURCE), None, self.API_HEADERS)
+        conn.request('GET', self.API_PATH+'/spacct/v1/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
         response = conn.getresponse()
         if response.status != 200:
-            self.logger.critical('Connection to {} failed.'.format(self.API_HOST))
+            self.logger.critical('Connection to {} failed. response was {}'.format(self.API_HOST,response.reason))
             response = self.Fallback_to_XSEDE()
         myresult = response.read().decode("utf-8-sig")
         mydata = json.loads(myresult)

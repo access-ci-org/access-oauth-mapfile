@@ -15,6 +15,7 @@ URL: http://access-ci.org
 %undefine _disable_source_fetch
 Source0: https://software.xsede.org/development/access-oauth-mapfile/access-oauth-mapfile-%version-%release/access-oauth-mapfile-%version-%release.tgz
 Group: System
+BuildArch: noarch
 Packager: XSEDE, Galen Arnold, Eric Blau, JP Navarro
 Requires: bash
 Requires: python3
