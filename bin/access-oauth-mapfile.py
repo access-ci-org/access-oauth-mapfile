@@ -192,7 +192,7 @@ class Generate_Mapfile():
             output_file = sys.stdout if USE_STDOUT else open(MAPFILE, 'w') 
             for user in mydata['result']['users']:
                 for name in user['usernames']:
-                    output_file.write('{}@access.org {}\n'.format(user['portalLogin'], name))
+                    output_file.write('{}@access-ci.org {}\n'.format(user['portalLogin'], name))
                     MAP_COUNT += 1
                 USER_COUNT += 1
             if output_file is not sys.stdout:

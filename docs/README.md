@@ -4,9 +4,9 @@
 
 This package generates a file called **access-oauth-mapfile** containing entries like:
 
-    {access_username}@access.org {local_username}
+    {access_username}@access-ci.org {local_username}
 
-Each entry maps an ACCESS OAuth identity in the form {access_username}@access.org to the
+Each entry maps an ACCESS OAuth identity in the form {access_username}@access-ci.org to the
 corresponding local username on a specific ACCESS resource. An ACCESS OAuth identity
 may have multiple lines mapping it to multiple local usernames. These mappings come
 from the ACCESS Central Database (XCDB) and are accessed by this tool through an API.
