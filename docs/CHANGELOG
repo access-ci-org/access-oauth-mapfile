@@ -1,3 +1,5 @@
+V 1.0.8 20220808 Eric
+  - First release as access-oauth-mapfile
 V 1.0.7 20210811 Eric
   - Added instructions for "advanced usage" setting up mapfiles for multiple resources
   - Bumped version to 1.0.7 for evenutal release.
