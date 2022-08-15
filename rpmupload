@@ -1,6 +1,6 @@
 #!/bin/sh -x
 
-PKG=$1
+PKG=access-oauth-mapfile
 VER=$(cat VERSION)
 REL=$(cat RELEASE)
 

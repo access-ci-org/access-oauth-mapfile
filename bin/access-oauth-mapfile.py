@@ -163,7 +163,7 @@ class Generate_Mapfile():
         conn.request('GET', '/spacct/v1/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
         response = conn.getresponse()
         if response.status != 200:
-            self.logger.critical('Falling back to XSEDE server failed.')
+            self.logger.critical('Falling back to XSEDE server failed. Response was {}'.format(response.reason))
             self.exit(1)
 
         return(response)
@@ -175,7 +175,7 @@ class Generate_Mapfile():
         """
         ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
         conn = httplib.HTTPSConnection(host=self.API_HOST, port=443, context=ctx)
-        conn.request('GET', self.API_PATH+'/spacct/v1/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
+        conn.request('GET', self.API_PATH+'/spacct/v2/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
         response = conn.getresponse()
         if response.status != 200:
             self.logger.critical('Connection to {} failed. response was {}'.format(self.API_HOST,response.reason))

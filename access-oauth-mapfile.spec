@@ -10,7 +10,7 @@ Summary: Utility scripts for generating an XSEDE OAuth mapfile
 Name: access-oauth-mapfile
 Version: %version
 Release: %release
-License: GPL
+License: Apache
 URL: http://access-ci.org
 %undefine _disable_source_fetch
 Source0: https://software.xsede.org/development/access-oauth-mapfile/access-oauth-mapfile-%version-%release/access-oauth-mapfile-%version-%release.tgz
