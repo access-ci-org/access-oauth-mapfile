@@ -50,13 +50,26 @@ just untarred.
 ## Request API Access Key
 
 If you don't have an XDCDB access API-KEY from a previous access-oauth-mapfile install,
-request one by following the instructions at https://xsede-xdcdb-api.xsede.org/, Clicking
-on the "Generate APIKEY" link, and following the displayed instructions. In the e-mail to
-help@xsede.org specify <AGENT> "spacct". If you are accessing the API for an ACCESS allocated
+request one by following the instructions at https://allocations-api.access-ci.org/acdb, Clicking
+on the "Generate APIKEY" link, and performing the following instructions:
+
+Create a support request at https://support.access-ci.org/user/login?destination=/open-a-ticket
+(You will have to login first.) 
+
+In the web form, select “Not related to a resource” and then click “Yes” next to “Is your request related to allocations?”
+
+ In the "Problem synopsis" field, enter "ACCESS API-KEY installation request"
+In the "Problem Description" field, enter:
+
+     "Please install the following HASH for agent spacct on resource <ACCESS RESOURCE NAME>"
+     <YOUR HASH>
+     "on server https://allocations-api.access-ci.org/acdb/"
+
+If you are accessing the API for an ACCESS allocated
 resource, provide the official XDCDB Resource Name, like "expanse.sdsc.xsede.org". If you are
 are testing the access-oauth-mapfile tool, or accessing mapping information for some other
 reason, provide the fully qualified hostname that will access the API as the XDCDB Resource
-Name. The XDCDB Resource Name is the API Client ID and does not limit which resources mappings
+Name. The resource name you give here will be used as the XA-RESOURCE in the access-oauth-mapfile configuration, acting as the API Client ID and does not limit which resources mappings
 can be looked up with API calls. ACCESS's active XDCDB Resource Names are listed at:
 * https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html
 
