@@ -30,9 +30,11 @@ Download the desired TAR release from [https://github.com/access-ci-org/access-o
 
 Execute:
 
-    $ mkdir {arbitrary_path}/access-oauth-mapfile-<version>
-    $ cd {arbitrary_path}/access-oauth-mapfile-<version>
+    $ mkdir {arbitrary_path}/
+    $ cd {arbitrary_path}/
     $ tar -xzf {downloaded_file}
+
+The tar will extract into the directory access-oauth-mapfile-{release}.
 
 Edit the untarred bin/access-oauth-mapfile.sh and set MAP_FILE_BASE to the directory that you just untarred.
 
