@@ -1,0 +1,9 @@
+Workflow:
+
+# Create TARs and RPMs
+./sbin/build-packages
+
+# Sign TARs and RPMs (optional--RPMs will be signed by xsedesig on upload)
+./sbin/sign-packages
+
+
