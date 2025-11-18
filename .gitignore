@@ -1,0 +1,6 @@
+# VS Code
+.vscode/
+
+# Temporary directories
+tmp_build/
+tmp_packages/

@@ -1,6 +1,6 @@
 {
     "XA-AGENT": "spacct",
-    "XA-RESOURCE": "expanse.sdsc.xsede.org",
-    "MAP-RESOURCE": "expanse.sdsc.xsede.org",
+    "XA-RESOURCE": "expanse.sdsc.access-ci.org",
+    "MAP-RESOURCE": "expanse.sdsc.access-ci.org",
     "XA-API-KEY": "012345abcde012345abcde"
 }

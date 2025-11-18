@@ -2,15 +2,13 @@
 """
 Generates an OAuth compatible map_file for use with GCS, OAuth SSH, and other services
 
-Galen Arnold, XSEDE, July 2019
-JP Navarro, April 2021
-Eric Blau, July 2022
+Galen Arnold, JP Navarro, Eric Blau
 """
 
 # To setup XA-API-KEY in the .json config file, see:
-# https://xsede-xdcdb-api.xsede.org, and all the tabs there, especially:
+# https://allocations-api.access-ci.org/acdb/, and all the tabs there, especially:
 #  -> Request Headers
-#  -> Generate API-KEY
+#  -> Generate APIKEY
 
 import argparse
 import http.client as httplib
@@ -159,7 +157,7 @@ class Generate_Mapfile():
             self.exit(1)
 
         ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-        conn = httplib.HTTPSConnection(host='xsede-xdcdb-api.xsede.org', port=443, context=ctx)
+        conn = httplib.HTTPSConnection(host='allocations-api.access-ci.org', port=443, context=ctx)
         conn.request('GET', '/spacct/v1/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
         response = conn.getresponse()
         if response.status != 200:

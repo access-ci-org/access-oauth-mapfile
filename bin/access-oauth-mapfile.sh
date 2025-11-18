@@ -4,7 +4,7 @@
 MAP_FILE=/etc/grid-security/access-oauth-mapfile
 # The config file used by this invokation of the access-oauth-mapfile script
 CONFIG_FILE=etc/access-oauth-mapfile-config.json
-# The mapfile generated from XDCDB in the current working directory
+# The mapfile generated from ACDB in the current working directory
 GEN_FILE=access-oauth-mapfile
 # Other locally managed mapfile entries
 LOCAL_FILE=/etc/grid-security/access-oauth-mapfile.local
