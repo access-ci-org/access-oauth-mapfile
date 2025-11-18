@@ -1,0 +1,25 @@
+#!/bin/sh -x
+
+PKG=access-oauth-mapfile
+VER=$(cat VERSION)
+REL=$(cat RELEASE)
+
+if [ ! -e VERSION ]; then
+  echo "You may not be in the right place to run upload"
+  echo "Please run from the root of the package"
+  exit 1
+fi
+
+CURRENTDIR=`pwd`
+echo $CURRENTDIR
+
+REPO_SOFTWARE=$CURRENTDIR/tar
+REPO_SUBDIR=$PKG-$VER-$REL
+
+mkdir -p $REPO_SOFTWARE/$REPO_SUBDIR
+tar cvfz $REPO_SOFTWARE/$REPO_SUBDIR/$REPO_SUBDIR.tgz LICENSE.txt etc var bin docs 
+cp -p docs/README.md $REPO_SOFTWARE/$REPO_SUBDIR/INSTALL
+cp -p docs/CHANGELOG $REPO_SOFTWARE/$REPO_SUBDIR/CHANGELOG
+rm -f $REPO_SOFTWARE/latest
+ln -s $REPO_SOFTWARE/$REPO_SUBDIR $REPO_SOFTWARE/latest
+ln -fs $REPO_SOFTWARE/$REPO_SUBDIR/INSTALL $REPO_SOFTWARE/INSTALL

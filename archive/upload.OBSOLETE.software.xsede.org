@@ -1,5 +1,8 @@
 #!/bin/sh -x
 
+echo "Obsolete as of V 1.1.0 when software.xsede.org was retired"
+exit 1
+
 PKG=access-oauth-mapfile
 VER=$(cat VERSION)
 REL=$(cat RELEASE)
@@ -10,8 +13,7 @@ if [ ! -e VERSION ]; then
   exit 1
 fi
 
-
-REPO=software.xsede.org
+REPO=software.operations.access-ci.org
 #REPO=localhost
 
 REPO_SOFTWARE=/local/software.xsede.org/development/$PKG
