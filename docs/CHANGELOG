@@ -1,6 +1,6 @@
-V 1.1.0 20251120 JP
+V 1.1.0 20251120 JP, Eric
   - finish switching XSEDE references to ACCESS, and eliminate software.xsede.org/software.operations.access-ci.org server dependencies
-  - new gentar
+  - new sbin/ scripts to generate tars and RPMs
 
 V 1.0.11 20220902 Eric
   - Fix reference to xsede-oauth-mapfile in gcs-mapfile-lookup.json
