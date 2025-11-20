@@ -1,3 +1,11 @@
+V 1.1.1 20251120 JP, Eric
+  - add var/ to deployment for logging
+  - fix ssl context which should be ssl.Purpose.SERVER_AUTH
+  - fix README.md documentation on how to set MAP-RESOURCE
+  - cleanup RPM spec
+  - set RPM build target to X86_64-redhat-linux to eliminate the need to install RPM with --ignoreos
+  - add Containerfile used for testing
+
 V 1.1.0 20251120 JP, Eric
   - finish switching XSEDE references to ACCESS, and eliminate software.xsede.org/software.operations.access-ci.org server dependencies
   - new sbin/ scripts to generate tars and RPMs

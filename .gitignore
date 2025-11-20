@@ -1,6 +1,9 @@
 # VS Code
 .vscode/
 
+# Mac
+.DS_Store
+
 # Temporary directories
 tmp_build/
 tmp_packages/
