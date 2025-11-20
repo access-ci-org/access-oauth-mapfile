@@ -2,17 +2,18 @@
 # Installing the access-oauth-mapfile tool
 ***
 
-This package generates a file called **access-oauth-mapfile** containing entries like:
+This tool generates a file called **access-oauth-mapfile** containing entries like:
 
     {access_username}@access-ci.org {local_username}
 
 Each entry maps an ACCESS OAuth identity in the form {access_username}@access-ci.org to the
 corresponding local username on a specific ACCESS resource. An ACCESS OAuth identity
 may have multiple lines mapping it to multiple local usernames. These mappings come
-from the ACCESS Central Database (ACDB) and are accessed by this tool through an API.
+from the ACCESS Central Database (ACDB) and are retrieved by this tool through an API.
 
 ACCESS's Globus Connect Server (GCS) v5.4+ and other tools use these mappings to
 access local resources as the authenticated user.
+
 
 ## Install
 
@@ -22,7 +23,7 @@ Choose either RPM or TAR install.
 
 Install the desired RPM release from [https://github.com/access-ci-org/access-oauth-mapfile/releases](https://github.com/access-ci-org/access-oauth-mapfile/releases).
 
-The RPM installs files under /usr/local/share/utils/access_oauth_mapfile/ by default.
+The RPM installs files by default under /usr/local/share/utils/access_oauth_mapfile/.
 
 #### TAR Install
 
@@ -34,7 +35,7 @@ Execute:
     $ cd {arbitrary_path}/
     $ tar -xzf {downloaded_file}
 
-The tar will extract into the directory access-oauth-mapfile-{release}.
+The tar will extract into the sub-directory access-oauth-mapfile-{release}.
 
 Edit the untarred bin/access-oauth-mapfile.sh and set MAP_FILE_BASE to the directory that you just untarred.
 
@@ -45,21 +46,22 @@ If you don't have an ACDB access API-KEY from a previous access-oauth-mapfile in
 request one by following the instructions at https://allocations-api.access-ci.org/acdb,
 Clicking on the "Generate APIKEY" link, and then perform the following steps:
 
-Open an operations request ticket at: [https://operations.access-ci.org/open-operations-request/](https://operations.access-ci.org/open-operations-request/). You will have to login first.
+Open an operations request ticket at: [https://operations.access-ci.org/open-operations-request/](https://operations.access-ci.org/open-operations-request/).
+You will have to login first.
 
 In the "Request Title" enter "Allocations API-KEY installation request"
 In the "Description" enter:
 
-     "Please install the following HASH for agent spacct on resource <ACCESS RESOURCE NAME>"
+     "Please install the following HASH for agent spacct on resource <ACCESS INFO RESOURCEID>"
      <YOUR HASH>
      "on server https://allocations-api.access-ci.org/acdb/"
 
-If you are accessing the API for an ACCESS allocated resource, provide the official ACDB Resource Name,
+If you are accessing the API for an ACCESS allocated resource, provide the official ACDB Info ResourceID,
 like "expanse.sdsc.access-ci.org". If you are are testing the access-oauth-mapfile tool, or accessing mapping
-information for some other reason, provide the fully qualified hostname that will access the API as the ACDB
-Resource Name. The resource name you give here will be used as the XA-RESOURCE in the access-oauth-mapfile
-configuration, acting as the API Client ID and does not limit which resources mappings can be looked up with
-API calls. ACCESS's active ACDB Resource Names are listed at:
+information for some other reason, provide the fully qualified hostname that this tool will run on. The
+Info ResourceID you provide is passed to the API in the XA-RESOURCE header and represents an API Client ID.
+All clients can access mappings for all resources, and which resource you want to retrieve mappings for is
+configured separately. Lookup official Info ResourceIDs here:
 
 * https://operations-api.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=latest_status
 
@@ -74,18 +76,18 @@ otherwise create it by copying the newly RPM/TAR installed etc/access-oauth-mapf
 Edit etc/access-oauth-mapfile-config.json and set:
 
     "XA-AGENT": "spacct",
-    "XA-RESOURCE": "<ACDB resource name> or <other fully qualified API client hostname>",
-    "MAP-RESOURCE": "<ACDB resource name>",
+    "XA-RESOURCE": "<ACDB Info ResourceID> or <other fully qualified hostname from above>",
+    "MAP-RESOURCE": "<ACDB Info ResourceID or xsede.org equivalent>",
     "XA-API-KEY": "<your API-KEY>"
 
-Where "XA-RESOURCE" identifies the Client ID (ACDB Resource Name above) that is retrieving the mappings,
-and "MAP-RESOURCE" is which ACCESS resource mappings you are retrieving. On a production resource both of
-these are normally the same, but in a testing or other situation a testing server / XA-RESOURCE may be
-accessing mappings for a production MAP-RESOURCE.
+Where "XA-RESOURCE" identifies the API Client ID described above, and "MAP-RESOURCE" is which ACCESS resource you want
+mappings for. For "MAP-RESOURCE" first try the ACDB Info ResourceID, which only works for a small subset of current
+ACCESS resources. If that doesn't retreieve mapping, try replacing the 'access-ci.org' suffix in the ID with 'xsede.org'.
+NOTE: using 'xsede.org' in the "MAP-RESOURCE" has nothing to do with whether the resources was part of XSEDE, it is
+due to some technical debt with how the ACCESS database identifies resources.
 
-The API-KEY may be from a previous access-oauth-mapfile configuration or a new one from the previous step.
-
-Set the permissions for the config for read-only by root to keep the API-KEY private:
+Keep the API-KEY private by only allowing the owner to view it, this should be root if you installed by RPM, or the account
+you insalled the TAR with:
 
     $ chmod 0600 etc/access-oauth-mapfile-config.json
 
