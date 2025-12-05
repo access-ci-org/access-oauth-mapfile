@@ -1,28 +1,28 @@
 ###############################################################################
-# Spec file for access-oauth-mapfile
+# RPM spec file for access-oauth-mapfile
 ################################################################################
 ################################################################################
 #
-#Macros to use in specfile
-Summary: Utility scripts for generating an XSEDE OAuth mapfile
+# Macros to use in specfile
+Summary: Utility scripts to generate an ACCESS OAuth mapfile
 Name: access-oauth-mapfile
 Version: %VER%
 Release: %REL%
-License: Apache
+License: Apache 2.0
 URL: http://access-ci.org
-Source0: https://software.xsede.org/development/access-oauth-mapfile/access-oauth-mapfile-%version%-%release%/access-oauth-mapfile-%version%-%release%.tgz
+Source0: access-oauth-mapfile-%version%-%release%/access-oauth-mapfile-%version%-%release%.tgz
 Group: System
 BuildArch: noarch
-Packager: XSEDE, Galen Arnold, Eric Blau, JP Navarro
+Packager: Eric Blau, JP Navarro, Galen Arnold
 Requires: bash
+Requires: crontabs
 Requires: python3
 
 # Build with the following syntax:
 # rpmbuild --target noarch -bb access-oauth-mapfile.spec
 
 %description
-A collection of utility scripts for generating an access user map file 
-mapping oauth identities to local user accounts.
+Utility scripts to generate a file that maps OAuth identities to local user accounts
 
 %prep
 ################################################################################
@@ -52,6 +52,7 @@ cp -a * $RPM_BUILD_ROOT/usr/local/share/utils/access_oauth_mapfile
 %attr(0755, root, root) /usr/local/share/utils/access_oauth_mapfile/etc/
 %attr(0600, root, root) /usr/local/share/utils/access_oauth_mapfile/etc/*.json
 %attr(0744, root, root) /usr/local/share/utils/access_oauth_mapfile/etc/gcs-mapfile-lookup.json
+%attr(0755, root, root) /usr/local/share/utils/access_oauth_mapfile/var/
 
 %pre
 mkdir -p /etc/grid-security
@@ -79,6 +80,7 @@ rm /etc/cron.hourly/access-oauth-mapfile.sh
 #rm -rf $RPM_BUILD_ROOT/usr/local/share/utils/access_oauth_mapfile
 
 %changelog
+* Thu Nov 20 2025 changes now being recorded in separate CHANGELOG file
 * Thu Jul 28 2022 Eric Blau <blau@anl.gov>
   - change references to XSEDE to ACCESS and add support for the transition from XSEDE services to ACCESS services
 * Fri Apr 9 2021 Eric Blau <blau@anl.gov>

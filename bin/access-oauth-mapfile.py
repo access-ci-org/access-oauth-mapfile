@@ -133,7 +133,7 @@ class Generate_Mapfile():
         """
         Check the Auth_Test and json handling via requests
         """
-        ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         conn = httplib.HTTPSConnection(host=self.API_HOST, port=443, context=ctx)
         conn.request('GET', self.API_PATH+"/spacct/auth_test", None, self.API_HEADERS)
         response = conn.getresponse()
@@ -153,10 +153,10 @@ class Generate_Mapfile():
         access_onset = datetime.date(2022,9,1)
         today = datetime.date.today()
         if today >= access_onset:
-            self.logger.critical('XSEDE has ended, cannot fall back to XSEDE erver.')
+            self.logger.critical('XSEDE has ended, cannot fall back to XSEDE server.')
             self.exit(1)
 
-        ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         conn = httplib.HTTPSConnection(host='allocations-api.access-ci.org', port=443, context=ctx)
         conn.request('GET', '/spacct/v1/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
         response = conn.getresponse()
@@ -171,7 +171,7 @@ class Generate_Mapfile():
         """
         Make the real query and generate a mapfile
         """
-        ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         conn = httplib.HTTPSConnection(host=self.API_HOST, port=443, context=ctx)
         conn.request('GET', self.API_PATH+'/spacct/v2/users/resource/{}'.format(self.RESOURCE), None, self.API_HEADERS)
         response = conn.getresponse()

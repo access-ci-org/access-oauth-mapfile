@@ -26,6 +26,7 @@ mkdir $TARPATH/bin
 mkdir $TARPATH/etc
 mkdir $TARPATH/docs
 mkdir $TARPATH/sbin
+mkdir $TARPATH/var
 
 cp -p VERSION RELEASE $TARPATH/
 
