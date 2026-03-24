@@ -1,3 +1,8 @@
+V 1.1.2 20260324 Eric
+  - RPM specfile bugfixes to have better defined behavior across versions of RPM
+  - removes unneeded and undesired group(root) dependency in resulting rpm
+  - fixes incorrect permissions encoded in rpm when built/installed with certain versions of RPM
+
 V 1.1.1 20251120 JP, Eric
   - add var/ to deployment for logging
   - fix ssl context which should be ssl.Purpose.SERVER_AUTH

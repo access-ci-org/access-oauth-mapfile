@@ -39,20 +39,25 @@ echo "BUILDROOT = $RPM_BUILD_ROOT"
 
 # copy files
 mkdir -p $RPM_BUILD_ROOT/usr/local/share/utils/access_oauth_mapfile
-cp -a * $RPM_BUILD_ROOT/usr/local/share/utils/access_oauth_mapfile
+#cp -a * $RPM_BUILD_ROOT/usr/local/share/utils/access_oauth_mapfile
+cp -a LICENSE.txt NOTICE README.md RELEASE VERSION bin docs etc var $RPM_BUILD_ROOT/usr/local/share/utils/access_oauth_mapfile
 
 #exit
 
 %files
-%attr(0744, root, root) /usr/local/share/utils/access_oauth_mapfile/*
-%attr(0755, root, root) /usr/local/share/utils/access_oauth_mapfile/docs/
-%attr(0744, root, root) /usr/local/share/utils/access_oauth_mapfile/docs/*
-%attr(0755, root, root) /usr/local/share/utils/access_oauth_mapfile/bin/
-%attr(0755, root, root) /usr/local/share/utils/access_oauth_mapfile/bin/*
-%attr(0755, root, root) /usr/local/share/utils/access_oauth_mapfile/etc/
-%attr(0600, root, root) /usr/local/share/utils/access_oauth_mapfile/etc/*.json
-%attr(0744, root, root) /usr/local/share/utils/access_oauth_mapfile/etc/gcs-mapfile-lookup.json
-%attr(0755, root, root) /usr/local/share/utils/access_oauth_mapfile/var/
+%attr(0744, -, -) /usr/local/share/utils/access_oauth_mapfile/LICENSE.txt
+%attr(0744, -, -) /usr/local/share/utils/access_oauth_mapfile/NOTICE
+%attr(0744, -, -) /usr/local/share/utils/access_oauth_mapfile/README.md
+%attr(0744, -, -) /usr/local/share/utils/access_oauth_mapfile/RELEASE
+%attr(0744, -, -) /usr/local/share/utils/access_oauth_mapfile/VERSION
+%attr(0755, -, -) /usr/local/share/utils/access_oauth_mapfile/docs/
+%attr(0744, -, -) /usr/local/share/utils/access_oauth_mapfile/docs/*
+%attr(0755, -, -) /usr/local/share/utils/access_oauth_mapfile/bin/
+%attr(0755, -, -) /usr/local/share/utils/access_oauth_mapfile/bin/*
+%attr(0755, -, -) /usr/local/share/utils/access_oauth_mapfile/etc/
+%attr(0600, -, -) /usr/local/share/utils/access_oauth_mapfile/etc/*.json
+%attr(0744, -, -) /usr/local/share/utils/access_oauth_mapfile/etc/gcs-mapfile-lookup.json
+%attr(0755, -, -) /usr/local/share/utils/access_oauth_mapfile/var/
 
 %pre
 mkdir -p /etc/grid-security
